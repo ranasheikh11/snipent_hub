@@ -80,12 +80,12 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
               <h1 className="text-lg font-black uppercase text-black line-clamp-1">{course.title}</h1>
             </div>
           </div>
-          <div className="w-full sm:w-48 space-y-1">
-            <div className="flex items-center justify-between text-[10px] font-mono font-bold">
-              <span>PROGRESS</span>
-              <span>{percent}%</span>
+          <div className="w-full sm:w-56 space-y-1 bg-[#F5F3FF] p-2 border-2 border-black shadow-[2px_2px_0px_#000]">
+            <div className="flex items-center justify-between text-[10px] font-mono font-black">
+              <span>COURSE PROGRESS</span>
+              <span className="text-emerald-700">{percent}%</span>
             </div>
-            <div className="w-full bg-neutral-200 border border-black h-2 overflow-hidden">
+            <div className="w-full bg-white border border-black h-2.5 overflow-hidden">
               <div className="bg-emerald-500 h-full transition-all" style={{ width: `${percent}%` }} />
             </div>
           </div>

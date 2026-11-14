@@ -2,7 +2,7 @@
 
 import React from "react";
 import { LectureItem } from "@/frontend/types/course";
-import { Check, Play } from "lucide-react";
+import { Check, Play, BookOpen, Sparkles } from "lucide-react";
 
 interface Props {
   lectures: LectureItem[];
@@ -16,10 +16,13 @@ export const CourseLecturesList: React.FC<Props> = ({
   lectures, activeVideoId, onSelectLecture, completedIds, onToggleComplete,
 }) => {
   return (
-    <div className="bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col h-[580px] overflow-hidden">
-      <div className="p-3 border-b-2 border-black bg-neutral-100 flex items-center justify-between">
-        <span className="font-black text-xs uppercase tracking-wider text-black">COURSE LECTURES</span>
-        <span className="text-[10px] font-mono font-bold bg-black text-white px-2 py-0.5 border border-black">
+    <div className="bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col min-h-[220px] max-h-[580px] overflow-hidden">
+      <div className="p-3 border-b-2 border-black bg-neutral-900 text-white flex items-center justify-between">
+        <span className="font-black text-xs uppercase tracking-wider flex items-center gap-1.5">
+          <BookOpen className="w-3.5 h-3.5 text-red-500" />
+          <span>Curriculum ({lectures.length})</span>
+        </span>
+        <span className="text-[10px] font-mono font-bold bg-emerald-500 text-black px-2 py-0.5 border border-black">
           {completedIds.length}/{lectures.length} DONE
         </span>
       </div>
@@ -34,7 +37,7 @@ export const CourseLecturesList: React.FC<Props> = ({
               key={l.videoId}
               onClick={() => onSelectLecture(l)}
               className={`p-3 flex items-start gap-2.5 transition-colors cursor-pointer ${
-                isActive ? "bg-black text-white" : "hover:bg-neutral-50 text-black"
+                isActive ? "bg-black text-white" : "hover:bg-[#F5F3FF] text-black"
               }`}
             >
               <button
@@ -59,7 +62,17 @@ export const CourseLecturesList: React.FC<Props> = ({
           );
         })}
       </div>
+
+      {lectures.length <= 3 && (
+        <div className="p-3.5 bg-[#F5F3FF] border-t-2 border-black mt-auto">
+          <span className="text-[10px] font-mono font-bold uppercase text-[#7C3AED] flex items-center gap-1 mb-1">
+            <Sparkles className="w-3 h-3" /> Learning Goal
+          </span>
+          <p className="text-[11px] font-mono text-neutral-700 leading-relaxed">
+            Mark lectures as completed to save your progress in browser storage.
+          </p>
+        </div>
+      )}
     </div>
   );
 };
-

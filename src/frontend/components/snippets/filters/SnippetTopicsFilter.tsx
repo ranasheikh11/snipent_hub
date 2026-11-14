@@ -20,10 +20,7 @@ const TOPICS_CONFIG: { id: TopicFilter; label: string; dotColor: string }[] = [
 ];
 
 export const SnippetTopicsFilter: React.FC<SnippetTopicsFilterProps> = ({
-  selectedTopic,
-  onSelectTopic,
-  topicCounts,
-  totalCount,
+  selectedTopic, onSelectTopic, topicCounts, totalCount,
 }) => {
   return (
     <div className="bg-white border-2 border-black shadow-[3px_3px_0px_#000] p-3 space-y-2">
@@ -35,7 +32,9 @@ export const SnippetTopicsFilter: React.FC<SnippetTopicsFilterProps> = ({
       <button
         onClick={() => onSelectTopic("ALL")}
         className={`w-full flex items-center justify-between px-3 py-1.5 text-xs font-black uppercase tracking-wider border-2 border-black cursor-pointer transition-all ${
-          selectedTopic === "ALL" ? "bg-black text-white" : "bg-white text-black hover:bg-neutral-50"
+          selectedTopic === "ALL"
+            ? "bg-black text-white shadow-[2px_2px_0px_#7C3AED]"
+            : "bg-white text-black hover:bg-neutral-50 hover:translate-x-0.5"
         }`}
       >
         <span>ALL</span>
@@ -52,7 +51,9 @@ export const SnippetTopicsFilter: React.FC<SnippetTopicsFilterProps> = ({
             key={t.id}
             onClick={() => onSelectTopic(t.id)}
             className={`w-full flex items-center justify-between px-3 py-1.5 text-xs font-black uppercase tracking-wider border-2 border-black cursor-pointer transition-all ${
-              isSelected ? "bg-black text-white" : "bg-white text-black hover:bg-neutral-50"
+              isSelected
+                ? "bg-black text-white shadow-[2px_2px_0px_#7C3AED]"
+                : "bg-white text-black hover:bg-neutral-50 hover:translate-x-0.5"
             }`}
           >
             <span className="flex items-center gap-2">
@@ -69,7 +70,7 @@ export const SnippetTopicsFilter: React.FC<SnippetTopicsFilterProps> = ({
       <button
         onClick={() => onSelectTopic("FAVORITES")}
         className={`w-full flex items-center justify-between px-3 py-2 text-xs font-black uppercase tracking-wider border-2 border-black cursor-pointer transition-all ${
-          selectedTopic === "FAVORITES" ? "bg-amber-400 text-black" : "bg-amber-100 hover:bg-amber-200 text-black"
+          selectedTopic === "FAVORITES" ? "bg-amber-400 text-black shadow-[2px_2px_0px_#000]" : "bg-amber-100 hover:bg-amber-200 text-black"
         }`}
       >
         <span className="flex items-center gap-1.5">
@@ -83,4 +84,3 @@ export const SnippetTopicsFilter: React.FC<SnippetTopicsFilterProps> = ({
     </div>
   );
 };
-
