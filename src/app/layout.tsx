@@ -1,10 +1,16 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { AuthProvider } from "@/frontend/hooks/useAuth";
 import { ApiInterceptor } from "@/frontend/components/layout/ApiInterceptor";
 import "./globals.css";
 
 const isExport = process.env.NEXT_EXPORT === "true" || process.env.GITHUB_ACTIONS === "true";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? (isExport ? "/snipent_hub" : "");
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export const metadata: Metadata = {
   title: "SnippetHub - Save • Organize • Reuse • Share",

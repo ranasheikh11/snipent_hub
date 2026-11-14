@@ -47,8 +47,8 @@ export const SnippetDiscoveryBar: React.FC<SnippetDiscoveryBarProps> = ({
         })}
       </div>
 
-      <div className="flex items-center">
-        <div className="relative flex-1 sm:w-72">
+      <div className="flex items-center w-full lg:w-auto">
+        <div className="relative flex-1 min-w-0 sm:w-72">
           <input
             type="text"
             value={searchQuery}

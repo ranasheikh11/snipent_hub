@@ -39,10 +39,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
-      <div className="bg-white border-3 border-black shadow-[8px_8px_0px_#000] w-full max-w-md overflow-hidden">
-        <div className="border-b-2 border-black p-4 bg-[#FFEAE5] flex items-center justify-between">
-          <h2 className="font-black text-lg uppercase tracking-wide">
+    <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-2 sm:p-4">
+      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#000] sm:shadow-[8px_8px_0px_#000] w-full max-w-md overflow-hidden">
+        <div className="border-b-2 border-black p-3.5 sm:p-4 bg-[#FFEAE5] flex items-center justify-between">
+          <h2 className="font-black text-base sm:text-lg uppercase tracking-wide">
             {isRegister ? "Create DevVault Account" : "Welcome Back"}
           </h2>
           <button onClick={onClose} className="p-1 border border-black bg-white cursor-pointer hover:bg-neutral-100">
@@ -50,7 +50,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           </button>
         </div>
 
-        <div className="p-6 space-y-4">
+        <div className="p-4 sm:p-6 space-y-4">
           <SocialAuthButtons onSuccess={onClose} onError={(msg) => setError(msg)} />
 
           <div className="flex items-center gap-2 my-2">

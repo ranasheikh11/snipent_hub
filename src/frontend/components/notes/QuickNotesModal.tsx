@@ -48,9 +48,9 @@ export const QuickNotesModal: React.FC<QuickNotesModalProps> = ({ isOpen, onClos
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
-      <div className="bg-white border-3 border-black shadow-[8px_8px_0px_#000] w-full max-w-xl max-h-[85vh] flex flex-col overflow-hidden">
-        <div className="border-b-2 border-black p-4 bg-amber-300 flex items-center justify-between">
+    <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-2 sm:p-4">
+      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#000] sm:shadow-[8px_8px_0px_#000] w-full max-w-xl max-h-[88vh] flex flex-col overflow-hidden">
+        <div className="border-b-2 border-black p-3.5 sm:p-4 bg-amber-300 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Terminal className="w-5 h-5 text-black" />
             <h2 className="font-black text-sm uppercase tracking-wider text-black">

@@ -43,10 +43,10 @@ export const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
-      <div className="bg-white border-3 border-black shadow-[8px_8px_0px_#000] w-full max-w-md overflow-hidden">
-        <div className="border-b-2 border-black p-4 bg-amber-300 flex items-center justify-between">
-          <h2 className="font-black text-lg uppercase tracking-wider text-black">
+    <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-2 sm:p-4">
+      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#000] sm:shadow-[8px_8px_0px_#000] w-full max-w-md overflow-hidden">
+        <div className="border-b-2 border-black p-3.5 sm:p-4 bg-amber-300 flex items-center justify-between">
+          <h2 className="font-black text-base sm:text-lg uppercase tracking-wider text-black">
             + Create Developer Community
           </h2>
           <button onClick={onClose} className="p-1 border border-black bg-white hover:bg-neutral-100 cursor-pointer">
@@ -54,7 +54,7 @@ export const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4">
           <div className="flex gap-2">
             <select
               value={icon}

@@ -38,16 +38,16 @@ export const NewBlogModal: React.FC<NewBlogModalProps> = ({ isOpen, onClose, onC
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
-      <div className="bg-white border-3 border-black shadow-[8px_8px_0px_#000] w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
-        <div className="border-b-2 border-black p-4 bg-[#7C3AED] flex items-center justify-between shrink-0">
-          <h2 className="font-black text-lg uppercase tracking-wider text-white">✍️ Write Blog Post</h2>
+    <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-2 sm:p-4">
+      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#000] sm:shadow-[8px_8px_0px_#000] w-full max-w-2xl max-h-[92vh] flex flex-col overflow-hidden">
+        <div className="border-b-2 border-black p-3.5 sm:p-4 bg-[#7C3AED] flex items-center justify-between shrink-0">
+          <h2 className="font-black text-base sm:text-lg uppercase tracking-wider text-white">✍️ Write Blog Post</h2>
           <button onClick={onClose} className="p-1 border border-white bg-white/20 hover:bg-white/30 cursor-pointer text-white">
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-5 overflow-y-auto space-y-3 flex-1">
+        <form onSubmit={handleSubmit} className="p-3.5 sm:p-5 overflow-y-auto space-y-3 flex-1">
           <BrutalistInput placeholder="BLOG TITLE" value={title} onChange={e => setTitle(e.target.value)} required />
           <div className="grid grid-cols-2 gap-2">
             <select value={category} onChange={e => setCategory(e.target.value)} className="bg-white border-2 border-black px-2 py-2 text-xs font-mono font-bold">
