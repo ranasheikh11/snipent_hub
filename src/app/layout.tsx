@@ -14,6 +14,9 @@ export const metadata: Metadata = {
     shortcut: `${basePath}/only_logo.png`,
     apple: `${basePath}/only_logo.png`,
   },
+  verification: {
+    google: "2lSNZFnjXgaTW74yM_S3SCD2v41F1emWUNKkQ42V5o0",
+  },
 };
 
 export default function RootLayout({
