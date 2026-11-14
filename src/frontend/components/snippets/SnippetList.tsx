@@ -15,7 +15,7 @@ interface SnippetListProps {
   onResetFilters: () => void;
 }
 
-const PAGE_SIZE = 6;
+const PAGE_SIZE = 20;
 
 export const SnippetList: React.FC<SnippetListProps> = ({
   snippets,

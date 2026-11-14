@@ -20,6 +20,15 @@ export const SnippetPagination: React.FC<SnippetPaginationProps> = ({
   const endItem = Math.min(currentPage * pageSize, totalItems);
 
   if (totalItems === 0) return null;
+  if (totalPages <= 1) {
+    return (
+      <div className="border-t-2 border-black/30 mt-8 pt-4 flex items-center justify-between">
+        <div className="font-mono text-xs text-neutral-700 font-bold">
+          Showing all {totalItems} Snippets
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="border-t-2 border-black/30 mt-8 pt-4 flex flex-col sm:flex-row items-center justify-between gap-4">

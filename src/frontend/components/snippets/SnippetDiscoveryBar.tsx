@@ -27,7 +27,7 @@ export const SnippetDiscoveryBar: React.FC<SnippetDiscoveryBarProps> = ({
 }) => {
   return (
     <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 no-scrollbar w-full sm:w-auto">
+      <div className="flex items-center gap-2 overflow-x-auto sm:overflow-visible pb-1 sm:pb-0 no-scrollbar w-full sm:w-auto flex-nowrap sm:flex-wrap lg:flex-nowrap">
         {TABS.map((tab) => {
           const isActive = activeMode === tab.id;
           return (

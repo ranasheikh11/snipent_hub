@@ -26,7 +26,7 @@ export const SnippetFilterSidebar: React.FC<SnippetFilterSidebarProps> = ({
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   return (
-    <aside className="w-full lg:w-64 space-y-4 lg:sticky lg:top-20 shrink-0 self-start">
+    <aside className="w-full lg:w-64 space-y-4 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto no-scrollbar shrink-0 self-start z-30">
       {/* Mobile Accordion Toggle */}
       <button
         type="button"

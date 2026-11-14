@@ -25,7 +25,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="w-full bg-white border-b-2 border-black sticky top-0 z-40">
+    <header className="w-full bg-white border-b-2 border-black sticky top-0 z-50 shadow-[0_2px_0px_#000]">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <button
