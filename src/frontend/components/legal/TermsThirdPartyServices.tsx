@@ -43,3 +43,4 @@ export const TermsThirdPartyServices: React.FC = () => {
     </section>
   );
 };
+

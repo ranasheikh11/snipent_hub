@@ -64,3 +64,4 @@ export const PrivacyGooglePolicy: React.FC = () => {
     </section>
   );
 };
+

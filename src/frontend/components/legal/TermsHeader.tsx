@@ -24,3 +24,4 @@ export const TermsHeader: React.FC = () => {
     </header>
   );
 };
+

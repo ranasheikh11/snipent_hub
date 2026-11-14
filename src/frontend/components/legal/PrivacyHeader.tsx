@@ -24,3 +24,4 @@ export const PrivacyHeader: React.FC = () => {
     </header>
   );
 };
+

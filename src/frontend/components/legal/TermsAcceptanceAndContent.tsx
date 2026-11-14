@@ -29,3 +29,4 @@ export const TermsAcceptanceAndContent: React.FC = () => {
     </section>
   );
 };
+

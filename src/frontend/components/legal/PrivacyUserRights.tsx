@@ -53,3 +53,4 @@ export const PrivacyUserRights: React.FC = () => {
     </section>
   );
 };
+

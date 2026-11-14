@@ -19,3 +19,4 @@ export const PrivacyDataUsage: React.FC = () => {
     </section>
   );
 };
+

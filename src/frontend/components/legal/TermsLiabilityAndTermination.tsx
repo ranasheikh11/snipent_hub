@@ -31,3 +31,4 @@ export const TermsLiabilityAndTermination: React.FC = () => {
     </section>
   );
 };
+
