@@ -19,7 +19,11 @@ export interface SnippetItem {
   isPublic: boolean;
   copyCount: number;
   starsCount: number;
+  starredBy?: string[];
+  questions?: any[];
   createdAt: string;
 }
 
-export type TopicFilter = "ALL" | "FLUTTER" | "BACKEND" | "REACT" | "JAVASCRIPT" | "FULLSTACK" | "FAVORITES";
+export type TopicFilter = "ALL" | "FLUTTER" | "BACKEND" | "REACT" | "NEXTJS" | "FULLSTACK" | "FAVORITES";
+export type SnippetScope = "ALL" | "SINGLE" | "MULTI";
+export type SortOption = "STARS" | "LATEST" | "COPIES";

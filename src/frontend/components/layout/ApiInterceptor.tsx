@@ -22,12 +22,20 @@ export function ApiInterceptor() {
     const originalFetch = window.fetch;
 
     window.fetch = function (input: RequestInfo | URL, init?: RequestInit) {
+      const isApi =
+        (typeof input === "string" && input.startsWith("/api/")) ||
+        (input instanceof URL && input.pathname.startsWith("/api/"));
+
+      if (!isApi) {
+        return originalFetch(input, init);
+      }
+
       const token = typeof localStorage !== "undefined" ? localStorage.getItem("devvault_token") : null;
       let url = input;
 
-      if (typeof input === "string" && input.startsWith("/api/")) {
+      if (typeof input === "string") {
         url = `${API_BASE_URL}${input}`;
-      } else if (input instanceof URL && input.pathname.startsWith("/api/")) {
+      } else {
         url = new URL(input.pathname + input.search, API_BASE_URL);
       }
 

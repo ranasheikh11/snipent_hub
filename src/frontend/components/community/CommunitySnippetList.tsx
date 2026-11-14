@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { SnippetItem } from "@/frontend/types/snippet";
 import { CopyButton } from "@/frontend/components/snippets/CopyButton";
 import { CodeTabsViewer } from "@/frontend/components/snippets/CodeTabsViewer";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, User, Clock, Star } from "lucide-react";
 
 interface CommunitySnippetListProps {
   snippets: SnippetItem[];
@@ -30,16 +31,34 @@ export const CommunitySnippetList: React.FC<CommunitySnippetListProps> = ({ snip
     <div className="space-y-3">
       {snippets.map((snip) => {
         const isExpanded = expandedId === snip.id;
+        const timeStr = snip.createdAt
+          ? new Date(snip.createdAt).toLocaleDateString(undefined, {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            }) + " at " +
+            new Date(snip.createdAt).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })
+          : "Recently";
+
         return (
           <div key={snip.id} className="border-2 border-black bg-white shadow-[3px_3px_0px_#000] p-3.5 space-y-2">
-            <div className="flex items-center justify-between">
+            <div className="flex items-start justify-between gap-2">
               <div>
-                <span className="text-[10px] font-mono font-bold bg-neutral-200 px-1.5 py-0.5 border border-black uppercase mr-2">
-                  {snip.technology}
-                </span>
-                <span className="font-mono font-bold text-xs text-black">{snip.title}</span>
+                <div className="flex items-center gap-1.5 flex-wrap mb-1">
+                  <span className="text-[10px] font-mono font-bold bg-[#7C3AED] text-white px-1.5 py-0.5 border border-black uppercase">
+                    {snip.technology}
+                  </span>
+                  <span className="text-[10px] font-mono font-bold text-neutral-500 flex items-center gap-1 bg-neutral-100 px-1.5 py-0.5 border border-black/20">
+                    <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-500" /> {snip.starsCount || 0}
+                  </span>
+                </div>
+                <h4 className="font-mono font-black text-sm text-black uppercase">{snip.title}</h4>
               </div>
-              <div className="flex items-center gap-2">
+
+              <div className="flex items-center gap-2 shrink-0">
                 <CopyButton textToCopy={snip.files[0]?.code || ""} snippetId={snip.id} label="Copy" />
                 <button
                   onClick={() => setExpandedId(isExpanded ? null : snip.id)}
@@ -51,7 +70,27 @@ export const CommunitySnippetList: React.FC<CommunitySnippetListProps> = ({ snip
               </div>
             </div>
 
-            <p className="text-[11px] font-mono text-neutral-600 line-clamp-1">{snip.description}</p>
+            {snip.description && (
+              <p className="text-[11px] font-mono text-neutral-600 line-clamp-2">{snip.description}</p>
+            )}
+
+            {/* Author & Timestamp meta bar */}
+            <div className="flex items-center justify-between pt-1 border-t border-black/10 text-[10px] font-mono text-neutral-600">
+              <div className="flex items-center gap-1">
+                <User className="w-3 h-3 text-[#7C3AED]" />
+                {snip.authorId ? (
+                  <Link href={`/profile/${snip.authorId}`} className="font-bold hover:underline text-black">
+                    {snip.author}
+                  </Link>
+                ) : (
+                  <span className="font-bold text-black">{snip.author}</span>
+                )}
+              </div>
+              <div className="flex items-center gap-1 text-neutral-500">
+                <Clock className="w-3 h-3" />
+                <span>{timeStr}</span>
+              </div>
+            </div>
 
             {isExpanded && (
               <div className="pt-2">
@@ -64,4 +103,3 @@ export const CommunitySnippetList: React.FC<CommunitySnippetListProps> = ({ snip
     </div>
   );
 };
-

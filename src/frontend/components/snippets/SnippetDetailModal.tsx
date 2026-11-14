@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { SnippetItem } from "@/frontend/types/snippet";
 import { CodeTabsViewer } from "./CodeTabsViewer";
 import { SnippetQABox } from "./SnippetQABox";
-import { GithubIcon } from "@/frontend/components/ui/GithubIcon";
-import { X, Calendar, User, Eye, Download, GitFork, Play } from "lucide-react";
+import { SnippetDetailActions } from "./SnippetDetailActions";
+import { X, Calendar, User, Eye } from "lucide-react";
 
 interface SnippetDetailModalProps {
   snippet: SnippetItem | null;
@@ -18,37 +18,14 @@ interface SnippetDetailModalProps {
 export const SnippetDetailModal: React.FC<SnippetDetailModalProps> = ({
   snippet, onClose, onForked, initialOpenQA, highlightQuestionId,
 }) => {
-  const [forking, setForking] = useState(false);
-  const [forkedMsg, setForkedMsg] = useState(false);
+  const [statusMsg, setStatusMsg] = useState<{ text: string; isError?: boolean } | null>(null);
+
   if (!snippet) return null;
 
-  const handleExportGist = () => {
-    const f = snippet.files[0];
-    const encoded = encodeURIComponent(f?.code || "");
-    window.open(`https://gist.github.com/?filename=${encodeURIComponent(f?.filename || "snippet.dart")}&content=${encoded}`, "_blank");
+  const showMsg = (text: string, isError = false) => {
+    setStatusMsg({ text, isError });
+    setTimeout(() => setStatusMsg(null), 4000);
   };
-
-  const handleDownload = () => {
-    snippet.files.forEach((f) => {
-      const blob = new Blob([f.code], { type: "text/plain" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url; a.download = f.filename; a.click();
-      URL.revokeObjectURL(url);
-    });
-  };
-
-  const handleFork = async () => {
-    setForking(true);
-    try {
-      const res = await fetch(`/api/snippets/${snippet.id}/fork`, { method: "POST" });
-      if (res.ok) {
-        setForkedMsg(true); setTimeout(() => setForkedMsg(false), 3000); onForked?.();
-      }
-    } finally { setForking(false); }
-  };
-
-  const isDart = snippet.technology.toLowerCase() === "flutter" || snippet.technology.toLowerCase() === "dart";
 
   return (
     <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
@@ -74,23 +51,14 @@ export const SnippetDetailModal: React.FC<SnippetDetailModalProps> = ({
               <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" /> {snippet.createdAt.substring(0, 10)}</span>
               <span className="flex items-center gap-1"><Eye className="w-3.5 h-3.5" /> Copied {snippet.copyCount} times</span>
             </div>
-            <div className="flex items-center gap-2">
-              <button onClick={handleFork} disabled={forking} className="flex items-center gap-1 px-2.5 py-1 bg-amber-400 text-black text-xs font-bold border border-black neo-press cursor-pointer">
-                <GitFork className="w-3.5 h-3.5" /> {forkedMsg ? "Forked!" : "Fork"}
-              </button>
-              {isDart && (
-                <a href="https://dartpad.dev/" target="_blank" rel="noreferrer" className="flex items-center gap-1 px-2.5 py-1 bg-emerald-400 text-black text-xs font-bold border border-black neo-press cursor-pointer">
-                  <Play className="w-3.5 h-3.5" /> DartPad
-                </a>
-              )}
-              <button onClick={handleExportGist} className="flex items-center gap-1 px-2.5 py-1 bg-black text-white text-xs font-bold border border-black neo-press cursor-pointer">
-                <GithubIcon className="w-3.5 h-3.5" /> Gist
-              </button>
-              <button onClick={handleDownload} className="flex items-center gap-1 px-2.5 py-1 bg-white text-black text-xs font-bold border border-black neo-press cursor-pointer hover:bg-neutral-100">
-                <Download className="w-3.5 h-3.5" /> Save
-              </button>
-            </div>
+            <SnippetDetailActions snippet={snippet} onForked={onForked} onNotify={showMsg} />
           </div>
+
+          {statusMsg && (
+            <div className={`p-2.5 text-xs font-mono font-bold border-2 border-black shadow-[2px_2px_0px_#000] ${statusMsg.isError ? "bg-red-200 text-red-900" : "bg-emerald-200 text-emerald-900"}`}>
+              {statusMsg.isError ? "⚠️ " : "✅ "} {statusMsg.text}
+            </div>
+          )}
 
           <CodeTabsViewer files={snippet.files} snippetId={snippet.id} />
           <SnippetQABox snippetId={snippet.id} initialOpen={initialOpenQA} highlightQuestionId={highlightQuestionId} />

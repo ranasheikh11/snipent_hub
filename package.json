@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node init && next dev",
-    "build": "node init && next build",
-    "start": "node init && next start",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "cloudinary": "^2.11.0",
     "clsx": "^2.1.1",
+    "firebase": "^13.3.0",
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^1.70.0",
     "mongoose": "^9.12.0",

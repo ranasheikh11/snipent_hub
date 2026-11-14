@@ -37,29 +37,33 @@ export const SnippetQABox: React.FC<{
 
   const submitQ = async () => {
     if (!newQ.trim() || !user) return;
-    const res = await fetch(`/api/snippets/${snippetId}/questions`, {
-      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ content: newQ }),
-    });
-    const data = await res.json();
-    if (data.success) { setQuestions(q => [...q, data.data]); setNewQ(""); }
+    try {
+      const res = await fetch(`/api/snippets/${snippetId}/questions`, {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ content: newQ }),
+      });
+      const data = await res.json().catch(() => null);
+      if (data?.success) { setQuestions(q => [...q, data.data]); setNewQ(""); }
+    } catch { /* ignore */ }
   };
 
   const submitA = async (qId: string) => {
     const content = answers[qId];
     if (!content?.trim() || !user) return;
-    const res = await fetch(`/api/snippets/${snippetId}/questions/${qId}`, {
-      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ content }),
-    });
-    const data = await res.json();
-    if (data.success) {
-      setQuestions(qs => qs.map(q => q._id === qId ? { ...q, answers: [...q.answers, data.data] } : q));
-      setAnswers(a => ({ ...a, [qId]: "" }));
-      await fetch("/api/notifications/questions", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ snippetId, questionId: qId }),
-      }).catch(() => {});
-      window.dispatchEvent(new Event("notifications_updated"));
-    }
+    try {
+      const res = await fetch(`/api/snippets/${snippetId}/questions/${qId}`, {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ content }),
+      });
+      const data = await res.json().catch(() => null);
+      if (data?.success) {
+        setQuestions(qs => qs.map(q => q._id === qId ? { ...q, answers: [...q.answers, data.data] } : q));
+        setAnswers(a => ({ ...a, [qId]: "" }));
+        await fetch("/api/notifications/questions", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ snippetId, questionId: qId }),
+        }).catch(() => {});
+        window.dispatchEvent(new Event("notifications_updated"));
+      }
+    } catch { /* ignore */ }
   };
 
   return (

@@ -10,7 +10,7 @@ import { BlogDetailModal } from "@/frontend/components/blogs/BlogDetailModal";
 import { useAuth } from "@/frontend/hooks/useAuth";
 import { Edit3, Trash2, Code2, BookOpen } from "lucide-react";
 
-export const ProfileContent: React.FC<{ userId: string }> = ({ userId }) => {
+export const ProfileContent: React.FC<{ userId: string; refreshKey?: number }> = ({ userId, refreshKey }) => {
   const { user: currentUser } = useAuth();
   const [snippets, setSnippets] = useState<SnippetItem[]>([]);
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
@@ -31,7 +31,7 @@ export const ProfileContent: React.FC<{ userId: string }> = ({ userId }) => {
     });
   };
 
-  useEffect(() => { loadData(); }, [userId]);
+  useEffect(() => { loadData(); }, [userId, refreshKey]);
 
   const handleDeleteSnippet = async (id: string) => {
     if (!confirm("Delete this snippet?")) return;

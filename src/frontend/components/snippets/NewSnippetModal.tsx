@@ -19,6 +19,7 @@ export const NewSnippetModal: React.FC<NewSnippetModalProps> = ({ isOpen, onClos
   const [description, setDescription] = useState("");
   const [technology, setTechnology] = useState("Flutter");
   const [category, setCategory] = useState("UI Components");
+  const [level, setLevel] = useState<"Beginner" | "Intermediate" | "Advanced">("Beginner");
   const [visibility, setVisibility] = useState<"public"|"private"|"draft">("public");
   const [files, setFiles] = useState<FileEntry[]>([{ filename: "main.dart", language: "dart", code: "", purpose: "" }]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -39,8 +40,8 @@ export const NewSnippetModal: React.FC<NewSnippetModalProps> = ({ isOpen, onClos
       const res = await fetch("/api/snippets", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          title, description, technology, category, isPublic: visibility === "public",
-          tags: [technology, category, visibility, ...extraTags], files, author: user?.name || "Rana Sheikh",
+          title, description, technology, category, level, isPublic: visibility === "public",
+          tags: [technology, category, level, visibility, ...extraTags], files, author: user?.name || "Rana Sheikh",
         }),
       });
       if (res.ok) { onCreated(); onClose(); }
@@ -62,12 +63,17 @@ export const NewSnippetModal: React.FC<NewSnippetModalProps> = ({ isOpen, onClos
 
         <form onSubmit={handleSubmit} className="p-5 overflow-y-auto space-y-3 flex-1">
           <BrutalistInput placeholder="SNIPPET TITLE" value={title} onChange={(e) => setTitle(e.target.value)} required />
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             <select value={technology} onChange={(e) => setTechnology(e.target.value)} className="bg-white border-2 border-black px-2 py-2 text-xs font-mono font-bold">
               {TECHS.map(t => <option key={t}>{t}</option>)}
             </select>
             <select value={category} onChange={(e) => setCategory(e.target.value)} className="bg-white border-2 border-black px-2 py-2 text-xs font-mono font-bold">
               {CATS.map(c => <option key={c}>{c}</option>)}
+            </select>
+            <select value={level} onChange={(e) => setLevel(e.target.value as any)} className="bg-white border-2 border-black px-2 py-2 text-xs font-mono font-bold">
+              <option value="Beginner">🟢 Beginner</option>
+              <option value="Intermediate">🟡 Intermediate</option>
+              <option value="Advanced">🔴 Advanced</option>
             </select>
             <select value={visibility} onChange={(e) => setVisibility(e.target.value as any)} className="bg-white border-2 border-black px-2 py-2 text-xs font-mono font-bold">
               <option value="public">🌐 Public (All)</option><option value="private">🔒 Private (Me)</option><option value="draft">📝 Draft</option>

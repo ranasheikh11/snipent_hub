@@ -1,5 +1,5 @@
 export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "https://snipenthubbaceknd.vercel.app";
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 export function getApiUrl(path: string): string {
   if (path.startsWith("http://") || path.startsWith("https://")) {
@@ -8,4 +8,3 @@ export function getApiUrl(path: string): string {
   const cleanPath = path.startsWith("/") ? path : `/${path}`;
   return `${API_BASE_URL}${cleanPath}`;
 }
-

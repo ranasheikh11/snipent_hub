@@ -8,6 +8,7 @@ interface AuthContextType {
   loading: boolean;
   login: (email: string, pass: string) => Promise<{ success: boolean; message?: string }>;
   register: (name: string, email: string, pass: string) => Promise<{ success: boolean; message?: string }>;
+  loginWithFirebaseGoogle: (p: { uid: string; email: string; name: string; avatar: string }) => Promise<{ success: boolean; message?: string }>;
   logout: () => Promise<void>;
   refresh: () => Promise<void>;
 }
@@ -64,14 +65,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return { success: false, message: data.message };
   };
 
+  const loginWithFirebaseGoogle = async (p: { uid: string; email: string; name: string; avatar: string }) => {
+    const res = await fetch("/api/auth/firebase", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(p),
+    });
+    const data = await res.json();
+    if (data.success) {
+      if (data.token) localStorage.setItem("devvault_token", data.token);
+      setUser(data.user);
+      return { success: true };
+    }
+    return { success: false, message: data.message };
+  };
+
   const logout = async () => {
     localStorage.removeItem("devvault_token");
     await fetch("/api/auth/me", { method: "POST" });
     setUser(null);
+    window.location.href = "/";
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, refresh }}>
+    <AuthContext.Provider value={{ user, loading, login, register, loginWithFirebaseGoogle, logout, refresh }}>
       {children}
     </AuthContext.Provider>
   );

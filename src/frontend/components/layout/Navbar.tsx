@@ -8,7 +8,7 @@ import { BrutalistButton } from "@/frontend/components/ui/BrutalistButton";
 import { useAuth } from "@/frontend/hooks/useAuth";
 import { AuthModal } from "@/frontend/components/auth/AuthModal";
 import { QuestionNotificationBell } from "./QuestionNotificationBell";
-import { Plus, Terminal, BookOpen, Users, LogOut, User } from "lucide-react";
+import { Plus, Terminal, BookOpen, Users, LogOut, User, Video } from "lucide-react";
 
 interface NavbarProps {
   onOpenNewSnippet: () => void;
@@ -17,9 +17,7 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
-  onOpenNewSnippet,
-  onOpenQuickNotes,
-  onSelectSnippetNotification,
+  onOpenNewSnippet, onOpenQuickNotes, onSelectSnippetNotification,
 }) => {
   const { user, logout } = useAuth();
   const [isAuthOpen, setIsAuthOpen] = useState(false);
@@ -29,10 +27,8 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center group py-1" title="SnippetHub">
           <Image
-            src={logoImg}
-            alt="SnippetHub - Save • Organize • Reuse • Share"
-            priority
-            className="h-11 sm:h-12 w-auto object-contain transition-transform group-hover:scale-[1.02]"
+            src={logoImg} alt="SnippetHub - Save • Organize • Reuse • Share"
+            priority className="h-11 sm:h-12 w-auto object-contain transition-transform group-hover:scale-[1.02]"
           />
         </Link>
 
@@ -45,6 +41,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           </Link>
           <Link href="/communities" className="text-xs font-black uppercase tracking-wider text-black hover:text-[#7C3AED] flex items-center gap-1">
             <Users className="w-3.5 h-3.5" /> Communities
+          </Link>
+          <Link href="/courses" className="text-xs font-black uppercase tracking-wider text-black hover:text-[#7C3AED] flex items-center gap-1">
+            <Video className="w-3.5 h-3.5 text-red-600" /> Courses
           </Link>
           <button onClick={onOpenQuickNotes} className="text-xs font-black uppercase tracking-wider text-black hover:text-[#7C3AED] flex items-center gap-1 cursor-pointer">
             <Terminal className="w-3.5 h-3.5" /> Notes
@@ -72,7 +71,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           )}
 
-          <BrutalistButton variant="primary" size="sm" onClick={onOpenNewSnippet} className="flex items-center gap-1 bg-[#7C3AED] text-white hover:bg-[#6D28D9]">
+          <BrutalistButton
+            variant="primary" size="sm"
+            onClick={() => { if (!user) { setIsAuthOpen(true); return; } onOpenNewSnippet(); }}
+            className="flex items-center gap-1 bg-[#7C3AED] text-white hover:bg-[#6D28D9]"
+          >
             <Plus className="w-3.5 h-3.5" /> <span>Post Code</span>
           </BrutalistButton>
         </div>

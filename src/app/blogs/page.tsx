@@ -7,6 +7,8 @@ import { Footer } from "@/frontend/components/layout/Footer";
 import { BlogCard } from "@/frontend/components/blogs/BlogCard";
 import { BlogDetailModal } from "@/frontend/components/blogs/BlogDetailModal";
 import { NewBlogModal } from "@/frontend/components/blogs/NewBlogModal";
+import { NewSnippetModal } from "@/frontend/components/snippets/NewSnippetModal";
+import { QuickNotesModal } from "@/frontend/components/notes/QuickNotesModal";
 import { BlogPost } from "@/frontend/types/blog";
 import { ArrowLeft, Plus } from "lucide-react";
 import { useAuth } from "@/frontend/hooks/useAuth";
@@ -15,6 +17,8 @@ export default function BlogsPage() {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [activeBlog, setActiveBlog] = useState<BlogPost | null>(null);
   const [isNewBlogOpen, setIsNewBlogOpen] = useState(false);
+  const [isNewSnippetOpen, setIsNewSnippetOpen] = useState(false);
+  const [isNotesOpen, setIsNotesOpen] = useState(false);
   const { user } = useAuth();
 
   const loadBlogs = () => {
@@ -25,7 +29,10 @@ export default function BlogsPage() {
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] flex flex-col font-sans">
-      <Navbar onOpenNewSnippet={() => {}} onOpenQuickNotes={() => {}} />
+      <Navbar
+        onOpenNewSnippet={() => setIsNewSnippetOpen(true)}
+        onOpenQuickNotes={() => setIsNotesOpen(true)}
+      />
 
       <div className="w-full bg-[#F5F3FF] border-b-2 border-black py-8 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-end justify-between gap-4">
@@ -61,6 +68,8 @@ export default function BlogsPage() {
       <Footer />
       <BlogDetailModal blog={activeBlog} onClose={() => setActiveBlog(null)} />
       <NewBlogModal isOpen={isNewBlogOpen} onClose={() => setIsNewBlogOpen(false)} onCreated={loadBlogs} />
+      <NewSnippetModal isOpen={isNewSnippetOpen} onClose={() => setIsNewSnippetOpen(false)} onCreated={() => {}} />
+      <QuickNotesModal isOpen={isNotesOpen} onClose={() => setIsNotesOpen(false)} />
     </div>
   );
 }

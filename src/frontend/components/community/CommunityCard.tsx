@@ -1,18 +1,24 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { CommunityItem } from "@/frontend/types/community";
 import { Users, Code, ArrowRight, Hash } from "lucide-react";
 
 interface CommunityCardProps {
   community: CommunityItem;
-  onSelect: (comm: CommunityItem) => void;
+  onSelect?: (comm: CommunityItem) => void;
 }
 
 export const CommunityCard: React.FC<CommunityCardProps> = ({ community, onSelect }) => {
   return (
-    <div
-      onClick={() => onSelect(community)}
+    <Link
+      href={`/communities/${community.slug || community.id}`}
+      onClick={(e) => {
+        if (onSelect) {
+          // allow navigation to dedicated page
+        }
+      }}
       className="bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between p-5 transition-all hover:-translate-y-1 hover:shadow-[6px_6px_0px_#000] cursor-pointer"
     >
       <div>
@@ -60,6 +66,6 @@ export const CommunityCard: React.FC<CommunityCardProps> = ({ community, onSelec
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
