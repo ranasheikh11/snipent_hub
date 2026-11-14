@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 pb-10 border-b border-neutral-300">
           <div className="sm:col-span-2">
             <div className="flex items-center mb-3">
-              <Image src={logoImg} alt="SnippetHub" className="h-10 w-auto object-contain" />
+              <Image src={logoImg} alt="SnippetHub" className="h-11 sm:h-12 w-auto object-contain" />
             </div>
             <p className="text-xs text-neutral-600 max-w-sm pl-3 border-l-2 border-[#7C3AED]">
               Save • Organize • Reuse • Share. Developer knowledge vault, YouTube-connected courses & open-source snippet hub.

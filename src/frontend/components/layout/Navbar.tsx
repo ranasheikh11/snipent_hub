@@ -39,7 +39,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <Link href="/" className="flex items-center group py-1" title="SnippetHub">
             <Image
               src={logoImg} alt="SnippetHub" priority
-              className="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-[1.02]"
+              className="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-[1.02]"
             />
           </Link>
         </div>
