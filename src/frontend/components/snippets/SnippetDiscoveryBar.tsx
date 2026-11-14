@@ -2,7 +2,7 @@
 
 import React from "react";
 import { DiscoveryMode } from "@/frontend/types/discovery";
-import { Flame, Star, Package, Trophy, Search, X, Square } from "lucide-react";
+import { Flame, Star, Package, Trophy, Square, X } from "lucide-react";
 
 interface SnippetDiscoveryBarProps {
   activeMode: DiscoveryMode;
@@ -26,8 +26,8 @@ export const SnippetDiscoveryBar: React.FC<SnippetDiscoveryBarProps> = ({
   onSearchChange,
 }) => {
   return (
-    <div className="w-full flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 mb-6">
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 lg:pb-0 no-scrollbar">
+    <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 no-scrollbar w-full sm:w-auto">
         {TABS.map((tab) => {
           const isActive = activeMode === tab.id;
           return (
@@ -47,32 +47,20 @@ export const SnippetDiscoveryBar: React.FC<SnippetDiscoveryBarProps> = ({
         })}
       </div>
 
-      <div className="flex items-center w-full lg:w-auto">
-        <div className="relative flex-1 min-w-0 sm:w-72">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="SEARCH FLUTTER, WEB, API..."
-            className="w-full bg-white text-black font-mono text-[11px] font-bold uppercase px-3 py-2 border-2 border-r-0 border-black focus:outline-none placeholder:text-neutral-400 shadow-[2px_2px_0px_#000]"
-          />
-          {searchQuery && (
-            <button
-              onClick={() => onSearchChange("")}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-black cursor-pointer text-xs font-mono font-bold"
-            >
-              <X className="w-3.5 h-3.5" />
-            </button>
-          )}
+      {searchQuery && (
+        <div className="flex items-center gap-2 bg-[#F5F3FF] border-2 border-black px-3 py-1.5 shadow-[2px_2px_0px_#000] shrink-0">
+          <span className="text-xs font-mono font-bold text-black">
+            Search: <span className="text-[#7C3AED] uppercase font-black">&quot;{searchQuery}&quot;</span>
+          </span>
+          <button
+            onClick={() => onSearchChange("")}
+            className="p-0.5 bg-black text-white hover:bg-neutral-800 cursor-pointer"
+            title="Clear search filter"
+          >
+            <X className="w-3.5 h-3.5" />
+          </button>
         </div>
-        <button
-          type="button"
-          className="bg-[#7C3AED] hover:bg-[#6D28D9] text-white p-2 border-2 border-black shadow-[2px_2px_0px_#000] neo-press cursor-pointer flex items-center justify-center shrink-0"
-        >
-          <Search className="w-4 h-4 stroke-[3]" />
-        </button>
-      </div>
+      )}
     </div>
   );
 };
-
