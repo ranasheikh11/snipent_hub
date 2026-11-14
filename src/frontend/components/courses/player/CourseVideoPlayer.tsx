@@ -42,6 +42,9 @@ export const CourseVideoPlayer: React.FC<Props> = ({ lecture, courseTitle }) => 
           <h2 className="text-base sm:text-lg font-black uppercase text-black leading-snug line-clamp-2">
             {lecture.title}
           </h2>
+          <p className="text-[10px] font-mono text-neutral-500 mt-1">
+            💡 If video shows &quot;Private&quot;, change its setting to <strong>Unlisted</strong> in YouTube Studio to play here.
+          </p>
         </div>
 
         <a
