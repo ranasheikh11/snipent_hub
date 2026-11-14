@@ -7,7 +7,6 @@ export function ApiInterceptor() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Capture OAuth token from URL query params
     const searchParams = new URLSearchParams(window.location.search);
     const oauthToken = searchParams.get("token");
     if (oauthToken) {
@@ -23,20 +22,21 @@ export function ApiInterceptor() {
 
     window.fetch = function (input: RequestInfo | URL, init?: RequestInit) {
       const isApi =
-        (typeof input === "string" && input.startsWith("/api/")) ||
-        (input instanceof URL && input.pathname.startsWith("/api/"));
+        (typeof input === "string" && (input.startsWith("/api/") || input.startsWith("/api?"))) ||
+        (input instanceof URL && input.pathname.startsWith("/api"));
 
-      if (!isApi) {
-        return originalFetch(input, init);
-      }
+      if (!isApi) return originalFetch(input, init);
 
       const token = typeof localStorage !== "undefined" ? localStorage.getItem("devvault_token") : null;
+      const baseUrl = API_BASE_URL.replace(/\/+$/, "");
       let url = input;
 
       if (typeof input === "string") {
-        url = `${API_BASE_URL}${input}`;
+        const cleanPath = input.startsWith("/") ? input : `/${input}`;
+        url = `${baseUrl}${cleanPath}`;
       } else {
-        url = new URL(input.pathname + input.search, API_BASE_URL);
+        const cleanPath = input.pathname.startsWith("/") ? input.pathname : `/${input.pathname}`;
+        url = new URL(`${baseUrl}${cleanPath}${input.search}`);
       }
 
       const headers = new Headers(init?.headers || {});
@@ -56,4 +56,3 @@ export function ApiInterceptor() {
 
   return null;
 }
-
